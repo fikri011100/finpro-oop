@@ -105,26 +105,6 @@ public class SuperLeagueManager implements LeagueManager {
         System.out.println("Insert Club Coach Name: ");
         line = scanner.nextLine();
         club.setCoach(line);
-        PrintWriter writerObj1;
-        JSONArray jsonArray = new JSONArray();
-        JSONObject objs = new JSONObject();
-        objs.put("club", jsonArray);
-        for (int i = 0;i < league.size() ; i++) {
-            JSONObject obj = new JSONObject();
-            JSONObject objItem =  new JSONObject();
-            objItem.put("name",  league.get(i).getName());
-            objItem.put("location",  league.get(i).getLocation());
-            objItem.put("coach",  league.get(i).getCoach());
-            jsonArray.put(objItem);
-        }
-        try {
-            writerObj1 = new PrintWriter(new File(URL +"player.json"));
-            writerObj1.write(objs.toString());
-            writerObj1.flush();
-            writerObj1.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 
     private void deleteTeam() {
@@ -141,39 +121,6 @@ public class SuperLeagueManager implements LeagueManager {
     }
 
     private void displayStatistics() {
-        FootballClub footballClub;
-        ArrayList<FootballClub> fb = new ArrayList<>();
-        JSONParser parser = new JSONParser();
-        try {
-            Object obj = parser.parse(new FileReader(URL +"player.json"));
-            org.json.simple.JSONObject jsonObject = (org.json.simple.JSONObject) obj;
-            org.json.simple.JSONArray companyList = (org.json.simple.JSONArray) jsonObject.get("club");
-            Iterator<org.json.simple.JSONObject> iterator = companyList.iterator();
-//            JSONObject object = new JSONObject(new FileReader(URL +"player.json"));
-//            JSONObject getObject = object.getJSONObject();
-//            JSONArray getArray = getObject.getJSONArray("JArray1");
-//            for (int i = 0; i < companyList.size(); i++) {
-//
-//            }
-            while (iterator.hasNext()) {
-//                for (int i = 0; i < iterator.next().size() ; i++) {
-                System.out.println("Club Name : " + iterator.next().get("name"));
-                System.out.println("Club Location : " + iterator.next().get("location"));
-                System.out.println("Club Coach : " + iterator.next().get("coach"));
-                System.out.println("size : " + iterator.next());
-//                }
-            }
-        } catch (Exception i) {
-            i.printStackTrace();
-            return;
-        }
-
-//        System.out.println("Deserialized Club...");
-//        for (FootballClub fc : fb) {
-//            System.out.println("Name: " + footballClub.getName());
-//            System.out.println("Address: " + footballClub.getLocation());
-//            System.out.println("Coach: " + footballClub.getCoach());
-//        }
 
         System.out.println("\n Insert club name: ");
         String line = scanner.nextLine();
