@@ -1,4 +1,6 @@
-package com.company;
+package com.company.util;
+
+import com.company.model.FootballClub;
 
 import java.util.Comparator;
 

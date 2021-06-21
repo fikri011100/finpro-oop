@@ -1,6 +1,6 @@
-package com.company;
+package com.company.model;
 
-public class FootballClub extends SportsClub {
+public class FootballClub extends SportsClub implements Comparable<FootballClub>{
 
     public int winCount;
     public int drawCount;
@@ -9,6 +9,11 @@ public class FootballClub extends SportsClub {
     public int receivedGoalsCount;
     public int points;
     public int matchesPlayed;
+
+    public FootballClub(String name, String location, String coach, String statistics) {
+        super(name, location, coach, statistics);
+    }
+
 
     public int getWinCount(){
         return winCount;
@@ -66,5 +71,9 @@ public class FootballClub extends SportsClub {
         matchesPlayed = i;
     }
 
+    @Override
+    public int compareTo(FootballClub o) {
+        return this.getName().compareTo(o.getName());
+    }
 }
 

@@ -1,1 +1,19 @@
-{"club":[{"name":"qwewqe","location":"sdsdas","coach":"asdasd"},{"name":"qwewqeqw","location":"asdasdas","coach":"asdas"},{"name":"osdksodksod","location":"osdksodksod","coach":"cmxkcmxlc"}]}
+{
+  "club": [
+    {
+      "name": "qwewqe",
+      "location": "sdsdas",
+      "coach": "asdasd"
+    },
+    {
+      "name": "qwewqeqw",
+      "location": "asdasdas",
+      "coach": "asdas"
+    },
+    {
+      "name": "osdksodksod",
+      "location": "osdksodksod",
+      "coach": "cmxkcmxlc"
+    }
+  ]
+}

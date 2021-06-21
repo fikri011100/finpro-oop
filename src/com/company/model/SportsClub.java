@@ -1,8 +1,6 @@
-package com.company;
+package com.company.model;
 
-import java.io.Serializable;
-
-public abstract class SportsClub implements Serializable {
+public abstract class SportsClub {
 
     public String name;
     public String location;
@@ -14,6 +12,12 @@ public abstract class SportsClub implements Serializable {
         return this.name.equals(((SportsClub)o).name);
     }
 
+    public SportsClub(String name, String location, String coach, String statistics) {
+        this.name = name;
+        this.location = location;
+        this.coach = coach;
+        this.statistics = statistics;
+    }
 
     public String getName() {
         return name;

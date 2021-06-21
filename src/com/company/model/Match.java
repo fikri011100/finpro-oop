@@ -1,4 +1,6 @@
-package com.company;
+package com.company.model;
+
+import com.company.model.FootballClub;
 
 import java.util.Date;
 
@@ -8,6 +10,9 @@ public class Match {
     private FootballClub teamB;
     private int teamAScore;
     private int teamBScore;
+    private String referee;
+    private String stadion;
+    private String city;
     private Date date;
 
 
