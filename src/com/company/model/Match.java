@@ -17,10 +17,6 @@ public class Match {
     private int redCard;
     private int yellowCard;
 
-    public Match() {
-
-    }
-
     public Match(FootballClub teamA, FootballClub teamB, int teamAScore, int teamBScore, String referee, String assistantReferee, String stadion, Date date, int redCard, int yellowCard) {
         this.teamA = teamA;
         this.teamB = teamB;
@@ -33,6 +29,8 @@ public class Match {
         this.redCard = redCard;
         this.yellowCard = yellowCard;
     }
+
+
 
     public String getReferee() {
         return referee;

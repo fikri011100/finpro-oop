@@ -10,10 +10,20 @@ public class FootballClub extends SportsClub implements Comparable<FootballClub>
     public int points;
     public int matchesPlayed;
 
-    public FootballClub(String name, String location, String coach, String statistics) {
-        super(name, location, coach, statistics);
+    public FootballClub(String name, String location, String coach) {
+        super(name, location, coach);
     }
 
+    public FootballClub(String name, String location, String coach, int winCount, int drawCount, int defeatCount, int scoredGoalsCount, int receivedGoalsCount, int points, int matchesPlayed) {
+        super(name, location, coach);
+        this.winCount = winCount;
+        this.drawCount = drawCount;
+        this.defeatCount = defeatCount;
+        this.scoredGoalsCount = scoredGoalsCount;
+        this.receivedGoalsCount = receivedGoalsCount;
+        this.points = points;
+        this.matchesPlayed = matchesPlayed;
+    }
 
     public int getWinCount(){
         return winCount;

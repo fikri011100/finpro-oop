@@ -4,7 +4,7 @@ import com.company.model.FootballClub;
 
 import java.util.Comparator;
 
-public class CustomComparator implements Comparator<FootballClub> {
+public class StandingComparator implements Comparator<FootballClub> {
 
     @Override
     public int compare(FootballClub t, FootballClub t1) {

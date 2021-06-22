@@ -1,23 +1,32 @@
 package com.company.model;
 
-public class Player extends People {
+import com.company.interfaces.Card;
+
+public class Player extends People implements Card {
 
     private int number;
     private String team;
     private String position;
     private int redCard;
     private int yellowCard;
-    private int foul;
 
     public Player(String name, int age) {
         super(name, age);
     }
 
-    public Player(String name, int age, int redCard, int yellowCard, int foul) {
+    public Player(String name, int age, int redCard, int yellowCard) {
         super(name, age);
         this.redCard = redCard;
         this.yellowCard = yellowCard;
-        this.foul = foul;
+    }
+
+    public Player(String name, int age, int number, String team, String position, int redCard, int yellowCard) {
+        super(name, age);
+        this.number = number;
+        this.team = team;
+        this.position = position;
+        this.redCard = redCard;
+        this.yellowCard = yellowCard;
     }
 
     public Player(String name, int age, String team, String position, int number) {
@@ -51,14 +60,6 @@ public class Player extends People {
         this.yellowCard = yellowCard;
     }
 
-    public int getFoul() {
-        return foul;
-    }
-
-    public void setFoul(int foul) {
-        this.foul = foul;
-    }
-
     public String getTeam() {
         return team;
     }
@@ -73,5 +74,15 @@ public class Player extends People {
 
     public void setPosition(String position) {
         this.position = position;
+    }
+
+    @Override
+    public void redCard() {
+        redCard++;
+    }
+
+    @Override
+    public void yellowCard() {
+        yellowCard++;
     }
 }

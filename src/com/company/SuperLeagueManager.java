@@ -1,20 +1,22 @@
 package com.company;
 
-import com.company.interfaces.LeagueManager;
 import com.company.model.FootballClub;
 import com.company.model.Match;
 import com.company.model.Player;
 import com.company.model.Referee;
-import com.company.util.CustomComparator;
+import com.company.util.Config;
+import com.company.util.StandingComparator;
+import org.json.simple.JSONObject;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 
-public class SuperLeagueManager implements LeagueManager {
+public class SuperLeagueManager {
 
-    private final int numberOfClubs;
 
     private final ArrayList<FootballClub> league;
     private final ArrayList<Player> player;
@@ -23,26 +25,28 @@ public class SuperLeagueManager implements LeagueManager {
     private final ArrayList<Match> matches;
 
     public static void main(String[] args) {
-        SuperLeagueManager plm = new SuperLeagueManager(5);
-
+        SuperLeagueManager plm = new SuperLeagueManager();
 
     }
 
-    public SuperLeagueManager(int numberOfClubs) {
-
-        this.numberOfClubs = numberOfClubs;
+    public SuperLeagueManager() {
         league = new ArrayList<>();
         matches = new ArrayList<>();
         player = new ArrayList<>();
         referee = new ArrayList<>();
         scanner = new Scanner(System.in);
-        displayMenu();
+        Config config = new Config(league, matches, player, referee);
+        if (!config.checkDataExist()) {
+            config.addDefaultFile();
+        }
+        displayMenu(config);
     }
 
 
-    private void displayMenu() {
+    private void displayMenu(Config config) {
 
         int command = 0;
+        boolean ex = true;
         do {
             System.out.println("\nMalang Super League Menu");
             System.out.println("1. Create and Delete Data");
@@ -66,13 +70,25 @@ public class SuperLeagueManager implements LeagueManager {
                 case 3:
                     standing();
                     break;
+                case 4:
+                    config.saveExit();
+                    ex = false;
+                    return;
             }
 
-        } while (command != 4);
+        } while (ex == true);
     }
 
     private void standing() {
         //
+        int no = 1;
+        Collections.sort(league, new StandingComparator());
+        System.out.println("\t\t\t" + "Malang SuperLeague Standing" + "\t\t");
+        System.out.println("| Rank | Club's Name          | Match Played | GD | Points |");
+        for (FootballClub club : league) {
+            System.out.printf("| %-4d | %-20s | %-12d | %-2d | %-6d |\n",no, club.getName(), club.getMatchesPlayed(), (club.getScoredGoalsCount() - club.getReceivedGoalsCount()), club.getPoints());
+            no++;
+        }
     }
 
     private void viewData() {
@@ -108,6 +124,16 @@ public class SuperLeagueManager implements LeagueManager {
     }
 
     private void viewMatches() {
+        int no =1;
+        System.out.println("DATA PERTANDINGAN\n");
+
+        for (Match m : matches){
+            System.out.println("Pertandingan KE " + no);
+            System.out.printf("%-20s | %-3d VS %-3d | %-20s\n", m.getTeamA().getName(), m.getTeamAScore(), m.getTeamBScore(), m.getTeamB().getName());
+            System.out.println("Wasit                | Stadion              |  Date   | Kuning | Merah  |");
+            System.out.printf("%-20s | %-20s | %-20s | %-2d - %-2d - %-4d | %-6d | %-6d |", m.getReferee(), m.getStadion(), m.getDate(), m.getYellowCard(), m.getRedCard());
+            no++;
+        }
     }
 
     private void viewReferee() {
@@ -303,10 +329,6 @@ public class SuperLeagueManager implements LeagueManager {
 
     private void addTeam() {
         String name, location, coach;
-        if (league.size() == numberOfClubs) {
-            System.out.println("Can't add more clubs to league");
-            return;
-        }
 
         System.out.println("\nInsert Club Name: ");
         name = scanner.nextLine();
@@ -324,7 +346,7 @@ public class SuperLeagueManager implements LeagueManager {
         System.out.println("Insert Club Coach Name: ");
         coach = scanner.nextLine();
 
-        league.add(new FootballClub(name, location, coach, ""));
+        league.add(new FootballClub(name, location, coach));
         System.out.println("Club " + name + " Added");
         return;
     }
@@ -343,7 +365,7 @@ public class SuperLeagueManager implements LeagueManager {
     }
 
     private void addPlayedMatch() {
-        String refereeName, assistantReferee, stadion;
+        String refereeName, assistantReferee, stadion, playerName;
         int redCard, yellowCard;
         System.out.println("Enter date (format mm-dd-yyyy): ");
         String line = scanner.nextLine();
@@ -354,6 +376,7 @@ public class SuperLeagueManager implements LeagueManager {
             System.out.println("You have to enter date in format mm-dd-yyyy");
             return;
         }
+        viewTeam();
         System.out.println("Enter Home Team: ");
         line = scanner.nextLine();
         FootballClub home = null;
@@ -409,16 +432,43 @@ public class SuperLeagueManager implements LeagueManager {
         stadion = scanner.nextLine();
         System.out.println("Enter Red Card Amount : ");
         redCard = Integer.parseInt(scanner.nextLine());
+        for (int i = 0; i < redCard; i++) {
+            int ada = 0;
+            do {
+                System.out.println("Enter player name");
+                playerName = scanner.nextLine();
+                for (Player pl : player) {
+                    if (pl.getName().equals(playerName)) {
+                        ada = 1;
+                    }
+                }
+            } while (ada==0);
+            for (Player pl : player) {
+                if (pl.getName().equals(playerName)) {
+                    pl.redCard();
+                }
+            }
+        }
         System.out.println("Enter Yellow Card Amount : ");
         yellowCard = Integer.parseInt(scanner.nextLine());
+        for (int i = 0; i < yellowCard; i++) {
+            int ada = 0;
+            do {
+                System.out.println("Enter player name");
+                playerName = scanner.nextLine();
+                for (Player pl : player) {
+                    if (pl.getName().equals(playerName)) {
+                        ada = 1;
+                    }
+                }
+            } while (ada==0);
+            for (Player pl : player) {
+                if (pl.getName().equals(playerName)) {
+                    pl.yellowCard();
+                }
+            }
+        }
 
-        Match match = new Match();
-        match.setDate(date);
-        match.setTeamA(home);
-        match.setTeamB(away);
-        match.setTeamAScore(awayGoals);
-        match.setTeamBScore(homeGoals);
-        matches.add(match);
         matches.add(new Match(home, away, homeGoals, awayGoals, refereeName, assistantReferee, stadion, date, redCard, yellowCard));
         home.setScoredGoalsCount(home.getScoredGoalsCount() + homeGoals);
         away.setScoredGoalsCount(away.getScoredGoalsCount() + awayGoals);
@@ -462,19 +512,6 @@ public class SuperLeagueManager implements LeagueManager {
             }
         }
         System.out.println("No such club in league");
-    }
-
-    private void displayLeagueTable() {
-        Collections.sort(league, new CustomComparator());
-
-        System.out.println("\t\t\t" + "MLS Standing" + "\t\t");
-        System.out.println("\n");
-        System.out.println("Club" + "\t\t" + "Match Played" + "\t" + "GD" + "\t" + "Points");
-        for (FootballClub club : league) {
-            System.out.println(club.getName() + "\t\t" + club.getMatchesPlayed() + "\t\t\t\t" + (club.getScoredGoalsCount() - club.getReceivedGoalsCount()) + "\t\t" + club.getPoints());
-            //System.out.println("Club: " + club.getName()+" Points: "+ club.getPoints()+" goal difference: "+ (club.getScoredGoalsCount()-club.getReceivedGoalsCount()));
-        }
-
     }
 }
 
