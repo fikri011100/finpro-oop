@@ -2,6 +2,7 @@ package com.company.model;
 
 public class Player extends People {
 
+    private int number;
     private String team;
     private String position;
     private int redCard;
@@ -19,10 +20,19 @@ public class Player extends People {
         this.foul = foul;
     }
 
-    public Player(String name, int age, String team, String position) {
+    public Player(String name, int age, String team, String position, int number) {
         super(name, age);
         this.team = team;
         this.position = position;
+        this.number = number;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 
     public int getRedCard() {
