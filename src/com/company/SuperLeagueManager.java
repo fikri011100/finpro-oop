@@ -130,8 +130,8 @@ public class SuperLeagueManager {
         for (Match m : matches){
             System.out.println("Pertandingan KE " + no);
             System.out.printf("%-20s | %-3d VS %-3d | %-20s\n", m.getTeamA().getName(), m.getTeamAScore(), m.getTeamBScore(), m.getTeamB().getName());
-            System.out.println("Wasit                | Stadion              |  Date   | Kuning | Merah  |");
-            System.out.printf("%-20s | %-20s | %-20s | %-2d - %-2d - %-4d | %-6d | %-6d |", m.getReferee(), m.getStadion(), m.getDate(), m.getYellowCard(), m.getRedCard());
+            System.out.println("Wasit                | Stadion              | Date                | Kuning | Merah  |");
+            System.out.printf("%-20s | %-20s | %-20s | %-2d | %-2d |", m.getReferee(), m.getStadion(), m.getDate(), m.getYellowCard(), m.getRedCard());
             no++;
         }
     }
@@ -165,7 +165,7 @@ public class SuperLeagueManager {
         System.out.println("=========================");
         System.out.println("| No | Player Name          | Age | Position   | Red Card | Yellow Card | ");
         for (Player pl : player) {
-            if (pl.getTeam() == tim) {
+            if (pl.getTeam().equals(tim)) {
                 System.out.printf("| %-2d | %-20s | %-3d | %-10s | %-8d | %-12d|\n",
                         pl.getNumber(),
                         pl.getName(),
@@ -304,11 +304,15 @@ public class SuperLeagueManager {
             }
         } while (tim.equals(""));
         do {
-            System.out.println("\nInsert Name: ");
-            nama = scanner.nextLine();
+            do {
+                System.out.println("\nInsert Name: ");
+                nama = scanner.nextLine();
+            } while (nama.length() < 1 || nama.length() > 20);
 
-            System.out.println("\nInsert position: ");
-            posisi = scanner.nextLine();
+            do {
+                System.out.println("\nInsert position: [goalkeeper, defender, midfield, striker]");
+                posisi = scanner.nextLine();
+            } while (nama.equals("goalkeeper") || nama.equals("defender") || nama.equals("midfield") || nama.equals("striker"));
 
             System.out.println("\nInsert Usia: ");
             usia = scanner.nextLine();
@@ -365,17 +369,10 @@ public class SuperLeagueManager {
     }
 
     private void addPlayedMatch() {
-        String refereeName, assistantReferee, stadion, playerName;
+        String refereeName, assistantReferee, stadion, playerName, line;
         int redCard, yellowCard;
         System.out.println("Enter date (format mm-dd-yyyy): ");
-        String line = scanner.nextLine();
-        Date date;
-        try {
-            date = new SimpleDateFormat("MM-dd-yyyy").parse(line);
-        } catch (ParseException ex) {
-            System.out.println("You have to enter date in format mm-dd-yyyy");
-            return;
-        }
+        String date = scanner.nextLine();
         viewTeam();
         System.out.println("Enter Home Team: ");
         line = scanner.nextLine();
@@ -424,6 +421,7 @@ public class SuperLeagueManager {
             return;
         }
 
+        viewReferee();
         System.out.println("Enter Referee's Name : ");
         refereeName = scanner.nextLine();
         System.out.println("Enter Assistant Referee's Name : ");
@@ -491,27 +489,6 @@ public class SuperLeagueManager {
             home.setDrawCount(home.getDrawCount() + 1);
             away.setDrawCount(away.getDrawCount() + 1);
         }
-    }
-
-
-    private void displayStatistics() {
-
-        System.out.println("\n Insert club name: ");
-        String line = scanner.nextLine();
-        for (FootballClub club : league) {
-            if (club.getName().equals(line)) {
-                System.out.println("\n" + club.getName());
-                System.out.println(" matches won: " + club.getWinCount());
-                System.out.println(" matches lost: " + club.getDefeatCount());
-                System.out.println(" matches draw: " + club.getDrawCount());
-                System.out.println(" scored goals: " + club.getScoredGoalsCount());
-                System.out.println(" recieved goals: " + club.getReceivedGoalsCount());
-                System.out.println(" points: " + club.getPoints());
-                System.out.println(" matches played: " + club.getMatchesPlayed());
-                return;
-            }
-        }
-        System.out.println("No such club in league");
     }
 }
 

@@ -13,11 +13,11 @@ public class Match {
     private String referee;
     private String assistantReferee;
     private String stadion;
-    private Date date;
+    private String date;
     private int redCard;
     private int yellowCard;
 
-    public Match(FootballClub teamA, FootballClub teamB, int teamAScore, int teamBScore, String referee, String assistantReferee, String stadion, Date date, int redCard, int yellowCard) {
+    public Match(FootballClub teamA, FootballClub teamB, int teamAScore, int teamBScore, String referee, String assistantReferee, String stadion, String date, int redCard, int yellowCard) {
         this.teamA = teamA;
         this.teamB = teamB;
         this.teamAScore = teamAScore;
@@ -88,7 +88,7 @@ public class Match {
         return teamBScore;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -108,7 +108,7 @@ public class Match {
         this.teamBScore = teamBScore;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }

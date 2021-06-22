@@ -153,12 +153,7 @@ public class Config {
         String referee = (String) obj.get("referee");
         String assistantReferee = (String) obj.get("assistantReferee");
         String stadion = (String) obj.get("stadion");
-        Date date = null;
-        try {
-            date = new SimpleDateFormat("MM-dd-yyyy").parse(String.valueOf(obj.get("date")));
-        } catch (java.text.ParseException e) {
-            e.printStackTrace();
-        }
+        String date = (String) obj.get("date");
         int redCard = Integer.parseInt(String.valueOf(obj.get("redCard")));
         int yellowCard = Integer.parseInt(String.valueOf(obj.get("yellowCard")));
 
